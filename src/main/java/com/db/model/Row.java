@@ -5,24 +5,25 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class Row implements Serializable{
+public class Row implements Serializable {
 
-    private static final long SerialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+
     private final Map<String, Object> values;
 
-    public Row(){
+    public Row() {
         values = new LinkedHashMap<>();
     }
 
-    public void SetValue(String ColumnName, Object value){
-        values.put(ColumnName, value);
+    public void setValue(String columnName, Object value) {
+        values.put(columnName, value);
     }
 
-    public Object GetValue (String ColumnName){
-        return values.get(ColumnName);
+    public Object getValue(String columnName) {
+        return values.get(columnName);
     }
 
-    public Map<String, Object> getValues(){
+    public Map<String, Object> getValues() {
         return Collections.unmodifiableMap(values);
     }
 }
