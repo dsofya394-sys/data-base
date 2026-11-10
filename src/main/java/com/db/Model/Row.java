@@ -1,5 +1,6 @@
-package com.db.model;
+package com.db.Model;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -7,6 +8,7 @@ import java.util.Map;
 
 public class Row implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private final Map<String, Object> values;

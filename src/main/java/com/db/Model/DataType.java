@@ -1,4 +1,4 @@
-package com.db.model;
+package com.db.Model;
 
 public enum DataType {
     INTEGER,
