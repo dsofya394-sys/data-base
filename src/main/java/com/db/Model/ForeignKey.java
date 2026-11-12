@@ -1,22 +1,21 @@
-package com.db.model;
+package com.db.Model;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
 public class ForeignKey implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
-    private String sourceTableName;
-    private String columnName;
-    private String referencedTableName;
-    private String referencedColumnName;
+    private final String sourceTableName;
+    private final String columnName;
+    private final String referencedTableName;
+    private final String referencedColumnName;
 
-    public ForeignKey(String sourceTableName,
-                      String columnName,
-                      String referencedTableName,
-                      String referencedColumnName) {
-
+    public ForeignKey(String sourceTableName, String columnName,
+                      String referencedTableName, String referencedColumnName) {
         this.sourceTableName = Objects.requireNonNull(sourceTableName);
         this.columnName = Objects.requireNonNull(columnName);
         this.referencedTableName = Objects.requireNonNull(referencedTableName);
