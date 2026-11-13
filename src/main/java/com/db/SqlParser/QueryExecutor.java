@@ -105,6 +105,7 @@ public class QueryExecutor {
         return result;
     }
 
+    @SuppressWarnings("unchecked")
     private boolean compare(Object a, Object b, String op) {
         if (a == null || b == null) return false;
 
@@ -148,7 +149,7 @@ public class QueryExecutor {
 
         StringBuilder sep = new StringBuilder(".");
         for (int w : widths) {
-            sep.repeat("-", w + 2).append(".");
+            sep.append("-".repeat(w + 2)).append(".");
         }
         String line = sep.toString();
         System.out.println(line);

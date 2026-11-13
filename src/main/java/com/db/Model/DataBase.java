@@ -6,7 +6,6 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.*;
 
-
 public class DataBase implements Serializable {
 
     @Serial
@@ -53,7 +52,9 @@ public class DataBase implements Serializable {
 
     public void removeTable(String tableName) {
         Table table = getTable(tableName);
-        if (table == null) throw new IllegalArgumentException("Table not found");
+        if (table == null) {
+            throw new IllegalArgumentException("Table not found");
+        }
         for (ForeignKey foreignKey : foreignKeys) {
             if (foreignKey.getSourceTableName().equals(tableName)
                     || foreignKey.getReferencedTableName().equals(tableName)) {
@@ -66,7 +67,9 @@ public class DataBase implements Serializable {
 
     public void createIndex(String tableName, String columnName) {
         Table table = getTable(tableName);
-        if (table == null) throw new IllegalArgumentException("Table not found: " + tableName);
+        if (table == null) {
+            throw new IllegalArgumentException("Table not found: " + tableName);
+        }
 
         boolean columnExists = false;
         for (Column c : table.getColumns()) {
@@ -75,7 +78,9 @@ public class DataBase implements Serializable {
                 break;
             }
         }
-        if (!columnExists) throw new IllegalArgumentException("Column not found: " + columnName);
+        if (!columnExists) {
+            throw new IllegalArgumentException("Column not found: " + columnName);
+        }
 
         String key = tableName + "." + columnName;
         if (indexes.containsKey(key)) {
@@ -101,8 +106,12 @@ public class DataBase implements Serializable {
         Objects.requireNonNull(foreignKey);
         Table sourceTable = getTable(foreignKey.getSourceTableName());
         Table referencedTable = getTable(foreignKey.getReferencedTableName());
-        if (sourceTable == null) throw new IllegalArgumentException("Source table not found");
-        if (referencedTable == null) throw new IllegalArgumentException("Referenced table not found");
+        if (sourceTable == null) {
+            throw new IllegalArgumentException("Source table not found");
+        }
+        if (referencedTable == null) {
+            throw new IllegalArgumentException("Referenced table not found");
+        }
 
         Column sourceColumn = null;
         Column referencedColumn = null;
@@ -118,10 +127,15 @@ public class DataBase implements Serializable {
                 break;
             }
         }
-        if (sourceColumn == null) throw new IllegalArgumentException("Foreign key column not found in source table");
-        if (referencedColumn == null) throw new IllegalArgumentException("Referenced column not found");
-        if (!referencedColumn.isPrimaryKey())
+        if (sourceColumn == null) {
+            throw new IllegalArgumentException("Foreign key column not found in source table");
+        }
+        if (referencedColumn == null) {
+            throw new IllegalArgumentException("Referenced column not found");
+        }
+        if (!referencedColumn.isPrimaryKey()) {
             throw new IllegalArgumentException("Referenced column must be a primary key");
+        }
         if (sourceColumn.getDataType() != referencedColumn.getDataType()) {
             throw new IllegalArgumentException("Foreign key columns must have the same data type");
         }
@@ -141,7 +155,9 @@ public class DataBase implements Serializable {
 
     public void insert(String tableName, Row row) {
         Table table = getTable(tableName);
-        if (table == null) throw new IllegalArgumentException("Table has not found: " + tableName);
+        if (table == null) {
+            throw new IllegalArgumentException("Table has not found: " + tableName);
+        }
 
         for (ForeignKey foreignKey : foreignKeys) {
             if (!foreignKey.getSourceTableName().equals(tableName)) continue;
@@ -172,7 +188,9 @@ public class DataBase implements Serializable {
     public int update(String tableName, String conditionColumn, Object conditionValue,
                       Map<String, Object> newValues) {
         Table table = getTable(tableName);
-        if (table == null) throw new IllegalArgumentException("Table not found: " + tableName);
+        if (table == null) {
+            throw new IllegalArgumentException("Table not found: " + tableName);
+        }
 
         for (ForeignKey foreignKey : foreignKeys) {
             if (!foreignKey.getSourceTableName().equals(tableName)) continue;
@@ -201,7 +219,9 @@ public class DataBase implements Serializable {
         }
         for (DatabaseIndex index : indexes.values()) {
             if (index.getTableName().equals(tableName)) {
-                for (Row row : rowsToUpdate) index.removeRow(row);
+                for (Row row : rowsToUpdate) {
+                    index.removeRow(row);
+                }
             }
         }
 
@@ -209,7 +229,9 @@ public class DataBase implements Serializable {
 
         for (DatabaseIndex index : indexes.values()) {
             if (index.getTableName().equals(tableName)) {
-                for (Row row : rowsToUpdate) index.addRow(row);
+                for (Row row : rowsToUpdate) {
+                    index.addRow(row);
+                }
             }
         }
         return updated;
@@ -217,7 +239,9 @@ public class DataBase implements Serializable {
 
     public int delete(String tableName, String conditionColumn, Object conditionValue) {
         Table table = getTable(tableName);
-        if (table == null) throw new IllegalArgumentException("Table not found: " + tableName);
+        if (table == null) {
+            throw new IllegalArgumentException("Table not found: " + tableName);
+        }
 
         for (ForeignKey foreignKey : foreignKeys) {
             if (!foreignKey.getReferencedTableName().equals(tableName)) continue;
@@ -245,7 +269,9 @@ public class DataBase implements Serializable {
 
         for (DatabaseIndex index : indexes.values()) {
             if (index.getTableName().equals(tableName)) {
-                for (Row row : rowsToDelete) index.removeRow(row);
+                for (Row row : rowsToDelete) {
+                    index.removeRow(row);
+                }
             }
         }
         return deleted;
